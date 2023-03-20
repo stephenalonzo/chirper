@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chirper</title>
+    <link href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@44659d9/css/all.min.css" rel="stylesheet"
+        type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {},
+                screens: {
+                    "lg": '992px',
+                    "xl": '1200px'
+                }
+            },
+        }
+    </script>
+</head>
+
+<body>
+    <div class="grid grid-flow-row gap-0 lg:grid-cols-6 xl:w-3/4 xl:mx-auto">
+        <div class="hidden h-screen flex-col justify-between border-r bg-white lg:flex" id="sidebar">
+            <div class="px-4 py-6 space-y-8">
+                <div class="flex flex-row items-center justify-between">
+                    <i class="fa-regular fa-dove text-3xl text-blue-600"></i>
+                    <button type="button" id="close" class="flex lg:hidden"><i class="fa-regular fa-times text-2xl text-gray-700"></i></button>
+                </div>
+                <nav aria-label="Main Nav" class="mt-6 flex flex-col space-y-4">
+                    <a href="./" class="flex items-center gap-2 text-gray-700">
+                        <i class="fa-regular fa-home text-lg"></i>
+
+                        <span class="font-medium">Home</span>
+                    </a>
+
+                    <a href="./profile.html" class="flex items-center gap-2 text-gray-700">
+                        <i class="fa-regular fa-user text-lg"></i>
+
+                        <span class="font-medium">Profile</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+        <div class="lg:col-span-5">
+            <header aria-label="Site Header">
+                <div class="mx-auto flex h-16 w-full items-center justify-between p-4 border-b">
+                    <div class="flex flex-row items-center justify-between w-full">
+                        <button type="button" class="lg:hidden" id="bars"><i class="fa-solid fa-bars-sort text-3xl text-blue-600"></i></button>
+                        <form class="mb-0">
+                            <div class="relative">
+                                <input
+                                    class="h-10 rounded-lg border border-gray-200 pl-3 pr-10 placeholder-gray-300 focus:z-10"
+                                    placeholder="Explore" type="text" />
+                                <button type="submit" class="absolute inset-y-0 right-0 rounded-r-lg p-2 text-gray-600">
+                                    <i class="fa-solid fa-search text-sm"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </header>
+            <div class="border-b">
+                <div class="flex items-start gap-4 px-4 py-4 xl:pl-4 xl:pr-0">
+                    <a href="#" class="block shrink-0">
+                        <img alt="Speaker"
+                            src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            class="h-14 w-14 rounded-lg object-cover" />
+                    </a>
+                    <form action="" method="post" class="w-full flex flex-col items-end space-y-2">
+                        <textarea name="" id="" class="rounded border w-full h-32 resize-none p-2" cols="30" rows="10"
+                            placeholder="What's going on?"></textarea>
+                        <div class="flex flex-row items-center justify-between w-full">
+                            <span class="text-sm text-gray-500">150 characters remain</span>
+                            <button type="submit"
+                                class="px-3 py-2 w-16 rounded-md bg-blue-600 text-white">Chirp</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="border-b">
+                <div class="flex items-start gap-4 py-4 pl-4">
+                    <a href="#" class="block shrink-0">
+                        <img alt="Speaker"
+                            src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+                            class="h-14 w-14 rounded-lg object-cover" />
+                    </a>
+
+                    <div class="space-y-4">
+                        <span class="space-y-1">
+                            <div class="flex flex-wrap items-center lg:flex-row lg:justify-between">
+                                <span class="font-medium space-x-1">
+                                    <a href="#" class="text-lg hover:underline">
+                                        Question about Livewire Rendering and Alpine JS
+                                    </a>
+                                    <span class="text-sm font-normal text-gray-500">by Austin Reaves</span>
+                                </span>
+                                <span class="text-sm text-gray-500">
+                                    1 days ago
+                                </span>
+                            </div>
+                            <p class="text-gray-700">
+                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
+                                accusantium temporibus iure delectus ut totam natus nesciunt ex?
+                                Ducimus, enim.
+                            </p>
+                        </span>
+
+                        <div class="mt-2 flex flex-row items-center space-x-8">
+                            <div class="flex items-center space-x-2 text-gray-500">
+                                <a href="#"><i class="fa-regular fa-message"></i></a>
+                                <span href="#" class="text-sm">14</span>
+                            </div>
+
+                            <span class="hidden sm:block" aria-hidden="true">&middot;</span>
+
+                            <div class="flex items-center space-x-2 text-gray-500">
+                                <a href="#"><i class="fa-solid fa-retweet"></i></a>
+                                <span class="text-sm">14</span>
+                            </div>
+
+                            <span class="hidden sm:block" aria-hidden="true">&middot;</span>
+
+                            <div class="flex items-center space-x-2 text-gray-500">
+                                <a href="#"><i class="fa-regular fa-heart"></i></a>
+                                <span class="text-sm">14</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const bars = document.getElementById("bars");
+        const sidebar = document.getElementById("sidebar");
+        const close = document.getElementById("close");
+
+        bars.addEventListener('click', () =>  {
+            sidebar.classList.remove("hidden");
+            sidebar.classList.toggle("flex");
+            sidebar.classList.toggle("absolute");
+            sidebar.classList.toggle("w-full");
+            sidebar.classList.toggle("z-50");
+        });
+
+        close.addEventListener('click', () => {
+            sidebar.classList.toggle("hidden");
+            sidebar.classList.remove("flex");
+            sidebar.classList.remove("absolute");
+            sidebar.classList.remove("w-full");
+            sidebar.classList.remove("z-50");
+        });
+    </script>
+</body>
+
+</html>
