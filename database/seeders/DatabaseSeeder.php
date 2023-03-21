@@ -14,6 +14,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+
+        \App\Models\User::factory(1)->create([
+            'name'      => 'Austin Reaves',
+            'email'     => 'ar15@lakers.com',
+            'username'  => 'ar15',
+            'password'  => bcrypt('ihatejoshgreen')
+        ]);
+
+        \App\Models\User::factory(1)->create([
+            'name'      => 'Josh Green',
+            'email'     => 'frog@mavs.com',
+            'username'  => 'frog',
+            'password'  => bcrypt('isuckeggs')
+        ]);
+        
+        // \App\Models\Chirp::factory(1)->create([
+        //     'user_id'   => '1',
+        //     'name'  => 'Austin Reaves',
+        //     'username'  => 'ar15',
+        //     'subject'   => 'Hello World'
+        // ]);
     }
 }

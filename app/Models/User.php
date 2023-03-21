@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'username',
+        'avatar',
         'password',
     ];
 
@@ -41,4 +43,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function chirps()
+    {
+
+        $this->hasMany(Chirp::class, 'user_id');
+
+    }
+
 }
