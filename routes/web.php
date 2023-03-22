@@ -3,8 +3,6 @@
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\UserController;
-use App\Models\Chirp;
-use App\Models\Follow;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,10 +28,22 @@ Route::get('/', [ChirpController::class, 'index'])->name('timeline')->middleware
 // Store chirp
 Route::post('/chirp/create', [ChirpController::class, 'store']);
 
+// Edit user profile
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('edit profile')->middleware('auth');
+
+// Update user profile
+Route::put('/users/{user}/update', [UserController::class, 'update']);
+
+// Show followers
+Route::get('/users/{user}/followers', [FollowController::class, 'followers'])->name('followers');
+
+// Show following
+Route::get('/users/{user}/following', [FollowController::class, 'following'])->name('following');
+
 // Follow user
 Route::get('/users/{user}/follow', [FollowController::class, 'store']);
 
-// Follow user
+// Unfollow user
 Route::get('/users/{user}/unfollow', [FollowController::class, 'destroy']);
 
 // User profile
@@ -43,7 +53,7 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('profile');
  * 
  * User Authentication Handlers
  *  
- */ 
+*/
 
 // Return login index
 Route::get('/login', [UserController::class, 'index'])->name('login');
@@ -54,5 +64,8 @@ Route::post('/login/successful', [UserController::class, 'authenticate']);
 // Log user in
 Route::get('/logout', [UserController::class, 'destroy']);
 
-// Create user
+// Show create form
 Route::get('/register', [UserController::class, 'create']);
+
+// Register user
+Route::post('/users/register', [UserController::class, 'register']);

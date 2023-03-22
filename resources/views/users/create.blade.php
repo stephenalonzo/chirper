@@ -23,7 +23,8 @@
                 <h1 class="font-semibold text-2xl text-center">Welcome to Chirper!</h1>
                 <p class="text-gray-500">We're excited to have you join our community.</p>
             </div>
-            <form action="" method="post" class="px-4 grid grid-flow-row gap-4 w-full">
+            <form action="/users/register" method="POST" class="px-4 grid grid-flow-row gap-4 w-full">
+                @csrf
                 <div class="flex flex-col items-start space-y-1">
                     <label for="">Full Name</label>
                     <input type="text" name="name" class="p-2 rounded-md border w-full"
@@ -49,7 +50,7 @@
                 </div>
                 <div class="flex flex-col items-start space-y-1">
                     <label for="">Confirm password</label>
-                    <input type="password" name="password_confirmed" class="p-2 rounded-md border w-full" placeholder="Re-enter password">
+                    <input type="password" name="password_confirmation" class="p-2 rounded-md border w-full" placeholder="Re-enter password">
                 </div>
                 <span>
                     <button type="submit" class="px-4 py-2 rounded-md bg-blue-600 text-white">Register</button>

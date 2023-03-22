@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div class="grid grid-flow-row gap-0 lg:grid-cols-6 xl:w-3/4 xl:mx-auto">
+    <div class="grid grid-flow-row gap-0 lg:grid-cols-6 xl:w-2/3 xl:mx-auto">
         <div class="p-4 hidden h-screen flex-col justify-between border-r bg-white lg:flex" id="sidebar">
             <div class="space-y-8">
                 <div class="flex flex-row items-center justify-between">
@@ -48,7 +48,7 @@
                         </summary>
 
                         <nav aria-label="Teams Nav" class="mt-2 flex flex-col px-4 space-y-2">
-                            <a href="#"
+                            <a href="/users/{{ auth()->user()->id }}/edit"
                                 class="flex items-center gap-2 rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
                                 <i class="fa-regular fa-pen-to-square"></i>
                                 <span class="text-sm font-medium">Edit Profile</span>
@@ -64,11 +64,11 @@
         </div>
         <div class="lg:col-span-5">
             <header>
-                <div class="mx-auto flex h-16 w-full items-center justify-between p-4 border-b">
+                <div class="mx-auto flex h-16 w-full items-center justify-between px-4 border-b">
                     <div class="flex flex-row items-center justify-between w-full">
                         <button type="button" class="lg:hidden" id="bars"><i
                                 class="fa-solid fa-bars-sort text-3xl text-blue-600"></i></button>
-                        <span class="font-semibold text-xl">{{ Str::ucfirst(Route::currentRouteName()) }}</span>
+                        <span class="font-semibold text-xl hidden lg:flex">{{ Str::ucfirst(Route::currentRouteName()) }}</span>
                         <form class="mb-0">
                             <div class="relative">
                                 <input
@@ -91,6 +91,7 @@
         const bars = document.getElementById("bars");
         const sidebar = document.getElementById("sidebar");
         const close = document.getElementById("close");
+        const chirpBtn = document.getElementById("chirp-btn");
 
         bars.addEventListener('click', () => {
             sidebar.classList.remove("hidden");
