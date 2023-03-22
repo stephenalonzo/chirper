@@ -28,11 +28,15 @@ class ChirpController extends Controller
             'subject' => 'required|max:150'
         ]);
 
-        $inputFields['user_id'] = auth()->user()->id;
         $inputFields['name'] = auth()->user()->name;
         $inputFields['username'] = auth()->user()->username;
 
-        Chirp::create($inputFields);
+        $chirp = Chirp::create($inputFields);
+        
+        ChirpUser::create([
+           'chirp_id'   => $chirp->id,
+           'user_id'    => auth()->user()->id 
+        ]);
 
         return redirect('/');
 
