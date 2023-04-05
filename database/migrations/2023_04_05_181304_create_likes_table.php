@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('chirps', function (Blueprint $table) {
+        Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->longText('subject');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('chirp_id');
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('chirp_id')->references('id')->on('chirps')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chirps');
+        Schema::dropIfExists('likes');
     }
 };

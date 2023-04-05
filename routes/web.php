@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ChirpController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\RechirpController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,17 +18,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/**
- * 
- * Chirp Handlers
- *  
- */
-
 //  Return index
 Route::get('/', [ChirpController::class, 'index'])->name('timeline')->middleware('auth');
 
 // Store chirp
-Route::post('/chirp/create', [ChirpController::class, 'store']);
+Route::post('/chirps/create', [ChirpController::class, 'store']);
+
+// Delete chirp
+Route::get('/chirps/delete/{chirp}', [ChirpController::class, 'destroy']);
+
+// Like chirp
+Route::get('/chirps/like/{chirp}', [LikeController::class, 'store']);
+
+// Unlike chirp
+Route::get('/chirps/unlike/{chirp}', [LikeController::class, 'destroy']);
 
 // Edit user profile
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('edit profile')->middleware('auth');
@@ -48,12 +53,6 @@ Route::get('/users/{user}/unfollow', [FollowController::class, 'destroy']);
 
 // User profile
 Route::get('/users/{user}', [UserController::class, 'show'])->name('profile');
-
-/**
- * 
- * User Authentication Handlers
- *  
-*/
 
 // Return login index
 Route::get('/login', [UserController::class, 'index'])->name('login');

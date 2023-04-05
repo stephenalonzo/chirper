@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Like;
 use App\Models\Chirp;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -23,6 +24,7 @@ class User extends Authenticatable
         'email',
         'username',
         'avatar',
+        'like_id',
         'password',
     ];
 
@@ -49,6 +51,13 @@ class User extends Authenticatable
     {
 
         return $this->belongsToMany(Chirp::class);
+
+    }
+
+    public function likes()
+    {
+
+        return $this->belongsTo(Like::class);
 
     }
 

@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ChirpLike;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Chirp extends Model
 {
@@ -16,7 +17,14 @@ class Chirp extends Model
     public function users()
     {
 
-        return $this->belongsToMany(User::class, 'user_id');
+        return $this->belongsToMany(User::class);
+
+    }
+
+    public function likes()
+    {
+
+        return $this->hasMany(Like::class);
 
     }
 

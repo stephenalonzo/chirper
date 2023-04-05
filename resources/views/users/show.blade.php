@@ -95,10 +95,26 @@
                                     <span class="text-sm">14</span>
                                 </div>
                 
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                    <span class="text-sm">14</span>
-                                </div>
+                                @unless (count($likes) == 0)                            
+                                @foreach ($likes as $like)
+                                    @if ($like->chirp_id == $chirp->id && $like->user_id == auth()->user()->id)
+                                        <div class="flex items-center space-x-2 text-red-400">
+                                            <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-solid fa-heart"></i></a>
+                                            <span href="#" class="text-sm">{{ count($likes) }}</span>
+                                        </div>
+                                    @else
+                                        <div class="flex items-center space-x-2 text-gray-500">
+                                            <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                                            <span href="#" class="text-sm"></span>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @else
+                            <div class="flex items-center space-x-2 text-gray-500">
+                                <a href="/chirps/like/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                                <span href="#" class="text-sm"></span>
+                            </div>
+                            @endunless
                             </div>
                         </div>
                     </div>
@@ -140,14 +156,10 @@
                                     <span href="#" class="text-sm">14</span>
                                 </div>
 
-                                <span class="hidden sm:block" aria-hidden="true">&middot;</span>
-
                                 <div class="flex items-center space-x-2 text-gray-500">
                                     <a href="#"><i class="fa-solid fa-retweet"></i></a>
                                     <span class="text-sm">14</span>
                                 </div>
-
-                                <span class="hidden sm:block" aria-hidden="true">&middot;</span>
 
                                 <div class="flex items-center space-x-2 text-gray-500">
                                     <a href="#"><i class="fa-regular fa-heart"></i></a>
@@ -159,57 +171,61 @@
                 </div>
             </div>
             <div class="hidden" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                <div class="border-b">
-                    <div class="flex items-start gap-4 px-4 py-4 xl:pl-4 xl:pr-0">
-                        <a href="#" class="block shrink-0">
-                            <img alt="{{ 'Picture of ' . $user->name }}"
-                                src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                                class="h-14 w-14 rounded-lg object-cover" />
-                        </a>
-
-                        <div class="space-y-4">
-                            <span class="space-y-1">
-                                <div class="flex flex-wrap items-center lg:flex-row lg:justify-between">
-                                    <span class="font-medium space-x-1">
-                                        <a href="#" class="text-lg hover:underline">
-                                            Question about Livewire Rendering and Alpine JS
-                                        </a>
-                                        <span class="text-sm font-normal text-gray-500">by Austin Reaves</span>
-                                    </span>
-                                    <span class="text-sm text-gray-500">
-                                        1 days ago
-                                    </span>
-                                </div>
-                                <p class="text-gray-700">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-                                    accusantium temporibus iure delectus ut totam natus nesciunt ex?
-                                    Ducimus, enim.
-                                </p>
-                            </span>
-
-                            <div class="mt-2 flex flex-row items-center space-x-8">
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-message"></i></a>
-                                    <span href="#" class="text-sm">14</span>
-                                </div>
-
-                                <span class="hidden sm:block" aria-hidden="true">&middot;</span>
-
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                                    <span class="text-sm">14</span>
-                                </div>
-
-                                <span class="hidden sm:block" aria-hidden="true">&middot;</span>
-
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                    <span class="text-sm">14</span>
+            @unless (count($likes) == 0)
+                @foreach ($likes as $like)
+                    @if ($like->user_id == $user->id)
+                    <div class="border-b">
+                        <div class="flex items-start gap-4 p-4">
+                            <a href="#" class="block shrink-0">
+                                <img alt="{{ 'Picture of ' . $user->name }}" src="{{ asset('storage/'.$user->avatar) }}" class="h-14 w-14 rounded-lg object-cover" />
+                            </a>
+                            <div class="space-y-4 w-full">
+                                <span class="space-y-1">
+                                    <div class="flex flex-row items-center justify-between w-full">
+                                        <div class="font-medium space-x-1">
+                                            @foreach ($chirp->users as $user)
+                                                <span class="font-semibold">{{ $user->name }}</span>
+                                                <span class="font-normal text-gray-500">{{ ' @' . $user->username }}</span>
+                                            @endforeach
+                                        </div>
+                                        <span class="text-sm text-gray-500">
+                                            {{ date('H:i:s', strtotime($chirp->created_at)) }}
+                                        </span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        {{ $chirp->subject }}
+                                    </p>
+                                </span>
+                    
+                                <div class="mt-2 flex flex-row items-center space-x-6">
+                                    <div class="flex items-center space-x-2 text-gray-500">
+                                        <a href="#"><i class="fa-regular fa-message"></i></a>
+                                        <span href="#" class="text-sm">14</span>
+                                    </div>
+                    
+                                    <div class="flex items-center space-x-2 text-gray-500">
+                                        <a href="#"><i class="fa-solid fa-retweet"></i></a>
+                                        <span class="text-sm">14</span>
+                                    </div>
+                                    
+                                    @if ($like->chirp_id == $chirp->id && $like->user_id == auth()->user()->id)
+                                        <div class="flex items-center space-x-2 text-red-400">
+                                            <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-solid fa-heart"></i></a>
+                                            <span href="#" class="text-sm">{{ count($likes) }}</span>
+                                        </div>
+                                    @else
+                                        <div class="flex items-center space-x-2 text-gray-500">
+                                            <a href="/chirps/like/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                                            <span href="#" class="text-sm"></span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    @endif
+                @endforeach
+            @endunless
             </div>
         </div>
     </div>

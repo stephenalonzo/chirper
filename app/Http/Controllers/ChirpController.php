@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Chirp;
 use App\Models\ChirpUser;
-use App\Models\UserChirp;
+use App\Models\Like;
 use Illuminate\Http\Request;
 
 class ChirpController extends Controller
@@ -15,7 +14,8 @@ class ChirpController extends Controller
     {
 
         return view('index', [
-            'chirps'    => Chirp::all()
+            'chirps'    => Chirp::all(),
+            'likes'     => Like::all()
         ]);
         
     }
@@ -37,6 +37,16 @@ class ChirpController extends Controller
            'chirp_id'   => $chirp->id,
            'user_id'    => auth()->user()->id 
         ]);
+
+        return redirect('/');
+
+    }
+
+    // Delete chirp
+    public function destroy(Chirp $chirp)
+    {
+
+        $chirp->delete();
 
         return redirect('/');
 

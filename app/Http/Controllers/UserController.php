@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Follow;
 use App\Models\User;
-use App\Models\Follower;
-use App\Models\FollowUser;
-use App\Models\UserFollow;
+use App\Models\Chirp;
+use App\Models\Follow;
+use App\Models\ChirpLike;
+use App\Models\Like;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -28,7 +28,8 @@ class UserController extends Controller
             'user'      => $user,
             'following' => Follow::where('user_id_1', $user->id)->get(),
             'followers' => Follow::where('user_id_2', $user->id)->get(),
-            'follows'   => Follow::where('user_id_1', auth()->user()->id)->where('user_id_2', $user->id)->get()
+            'follows'   => Follow::where('user_id_1', auth()->user()->id)->where('user_id_2', $user->id)->get(),
+            'likes'     => Like::where('user_id', $user->id)->get()
         ]);
 
     }

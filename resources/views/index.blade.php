@@ -8,7 +8,7 @@
                 <i class="fa-solid fa-user-circle text-3xl"></i>
             @endunless
         </a>
-        <form action="/chirp/create" method="post" class="w-full flex flex-col items-end space-y-2">
+        <form action="/chirps/create" method="post" class="w-full flex flex-col items-end space-y-2">
             @csrf
             <textarea name="subject" id="" class="rounded border border-gray-200 w-full h-32 resize-none p-2" cols="30" rows="10" placeholder="What's going on?"></textarea>
             <div class="flex flex-row items-center justify-between w-full">
@@ -46,20 +46,39 @@
                 </p>
             </span>
 
-            <div class="mt-2 flex flex-row items-center space-x-6">
-                <div class="flex items-center space-x-2 text-gray-500">
-                    <a href="#"><i class="fa-regular fa-message"></i></a>
-                    <span href="#" class="text-sm">{{ '' }}</span>
+            <div class="flex flex-row item-center justify-between w-full">
+                <div class="mt-2 flex flex-row items-center space-x-6">
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <a href="#"><i class="fa-regular fa-message"></i></a>
+                        <span href="#" class="text-sm">{{ '' }}</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-solid fa-retweet"></i></a>
+                        <span href="#" class="text-sm"></span>
+                    </div>
+                    @unless (count($likes) == 0)                            
+                        @foreach ($likes as $like)
+                            @if ($like->chirp_id == $chirp->id && $like->user_id == auth()->user()->id)
+                                <div class="flex items-center space-x-2 text-red-400">
+                                    <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-solid fa-heart"></i></a>
+                                    <span href="#" class="text-sm">{{ count($likes) }}</span>
+                                </div>
+                            @else
+                                <div class="flex items-center space-x-2 text-gray-500">
+                                    <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                                    <span href="#" class="text-sm"></span>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
+                    <div class="flex items-center space-x-2 text-gray-500">
+                        <a href="/chirps/like/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                        <span href="#" class="text-sm"></span>
+                    </div>
+                    @endunless
                 </div>
-
-                <div class="flex items-center space-x-2 text-gray-500">
-                    <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                    <span href="#" class="text-sm">{{ '' }}</span>
-                </div>
-
-                <div class="flex items-center space-x-2 text-gray-500">
-                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                    <span href="#" class="text-sm">{{ '' }}</span>
+                <div class="text-gray-500">
+                    <a href="/chirps/delete/{{ $chirp->id }}"><i class="fa-regular fa-trash"></i></a>
                 </div>
             </div>
         </div>
