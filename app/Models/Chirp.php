@@ -28,4 +28,11 @@ class Chirp extends Model
 
     }
 
+    public function rechirps()
+    {
+
+        return $this->hasMany(Rechirp::class);
+
+    }
+
 }

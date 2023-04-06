@@ -33,6 +33,12 @@ Route::get('/chirps/like/{chirp}', [LikeController::class, 'store']);
 // Unlike chirp
 Route::get('/chirps/unlike/{chirp}', [LikeController::class, 'destroy']);
 
+// Repost chirp
+Route::get('/chirps/rechirp/{chirp}', [RechirpController::class, 'store']);
+
+// Unrepost chirp
+Route::get('/chirps/unrechirp/{chirp}', [RechirpController::class, 'destroy']);
+
 // Edit user profile
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('edit profile')->middleware('auth');
 

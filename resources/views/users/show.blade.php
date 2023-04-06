@@ -87,12 +87,12 @@
                             <div class="mt-2 flex flex-row items-center space-x-6">
                                 <div class="flex items-center space-x-2 text-gray-500">
                                     <a href="#"><i class="fa-regular fa-message"></i></a>
-                                    <span href="#" class="text-sm">14</span>
+                                    <span href="#" class="text-sm"></span>
                                 </div>
                 
                                 <div class="flex items-center space-x-2 text-gray-500">
                                     <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                                    <span class="text-sm">14</span>
+                                    <span class="text-sm"></span>
                                 </div>
                 
                                 @unless (count($likes) == 0)                            
@@ -177,37 +177,35 @@
                     <div class="border-b">
                         <div class="flex items-start gap-4 p-4">
                             <a href="#" class="block shrink-0">
-                                <img alt="{{ 'Picture of ' . $user->name }}" src="{{ asset('storage/'.$user->avatar) }}" class="h-14 w-14 rounded-lg object-cover" />
+                                <img alt="{{ 'Picture of ' . $like->user->name }}" src="{{ asset('storage/'.$user->avatar) }}" class="h-14 w-14 rounded-lg object-cover" />
                             </a>
                             <div class="space-y-4 w-full">
                                 <span class="space-y-1">
                                     <div class="flex flex-row items-center justify-between w-full">
                                         <div class="font-medium space-x-1">
-                                            @foreach ($chirp->users as $user)
-                                                <span class="font-semibold">{{ $user->name }}</span>
-                                                <span class="font-normal text-gray-500">{{ ' @' . $user->username }}</span>
-                                            @endforeach
+                                            <span class="font-semibold">{{ $like->user->name }}</span>
+                                            <span class="font-normal text-gray-500">{{ ' @' . $like->user->username }}</span>
                                         </div>
                                         <span class="text-sm text-gray-500">
-                                            {{ date('H:i:s', strtotime($chirp->created_at)) }}
+                                            {{ date('H:i:s', strtotime($like->chirp->created_at)) }}
                                         </span>
                                     </div>
                                     <p class="text-gray-700">
-                                        {{ $chirp->subject }}
+                                        {{ $like->chirp->subject }}
                                     </p>
                                 </span>
                     
                                 <div class="mt-2 flex flex-row items-center space-x-6">
                                     <div class="flex items-center space-x-2 text-gray-500">
                                         <a href="#"><i class="fa-regular fa-message"></i></a>
-                                        <span href="#" class="text-sm">14</span>
+                                        <span href="#" class="text-sm"></span>
                                     </div>
                     
                                     <div class="flex items-center space-x-2 text-gray-500">
                                         <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                                        <span class="text-sm">14</span>
+                                        <span class="text-sm"></span>
                                     </div>
-                                    
+
                                     @if ($like->chirp_id == $chirp->id && $like->user_id == auth()->user()->id)
                                         <div class="flex items-center space-x-2 text-red-400">
                                             <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-solid fa-heart"></i></a>

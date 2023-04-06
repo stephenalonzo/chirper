@@ -52,10 +52,26 @@
                         <a href="#"><i class="fa-regular fa-message"></i></a>
                         <span href="#" class="text-sm">{{ '' }}</span>
                     </div>
+                    @unless (count($rechirps) == 0)                            
+                        @foreach ($rechirps as $rechirp)
+                            @if ($rechirp->chirp_id == $chirp->id && $rechirp->user_id == auth()->user()->id)
+                                <div class="flex items-center space-x-2 text-green-600">
+                                    <a href="/chirps/unrechirp/{{ $chirp->id }}"><i class="fa-solid fa-retweet"></i></a>
+                                    <span href="#" class="text-sm">{{ count($rechirps) }}</span>
+                                </div>
+                            @else
+                                <div class="flex items-center space-x-2 text-gray-500">
+                                    <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-regular fa-retweet"></i></a>
+                                    <span href="#" class="text-sm"></span>
+                                </div>
+                            @endif
+                        @endforeach
+                    @else
                     <div class="flex items-center space-x-2 text-gray-500">
-                        <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-solid fa-retweet"></i></a>
+                        <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-regular fa-retweet"></i></a>
                         <span href="#" class="text-sm"></span>
                     </div>
+                    @endunless
                     @unless (count($likes) == 0)                            
                         @foreach ($likes as $like)
                             @if ($like->chirp_id == $chirp->id && $like->user_id == auth()->user()->id)
@@ -65,7 +81,7 @@
                                 </div>
                             @else
                                 <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="/chirps/unlike/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
+                                    <a href="/chirps/like/{{ $chirp->id }}"><i class="fa-regular fa-heart"></i></a>
                                     <span href="#" class="text-sm"></span>
                                 </div>
                             @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chirp;
 use App\Models\ChirpUser;
 use App\Models\Like;
+use App\Models\Rechirp;
 use Illuminate\Http\Request;
 
 class ChirpController extends Controller
@@ -15,7 +16,8 @@ class ChirpController extends Controller
 
         return view('index', [
             'chirps'    => Chirp::all(),
-            'likes'     => Like::all()
+            'likes'     => Like::all(),
+            'rechirps'  => Rechirp::all()
         ]);
         
     }
