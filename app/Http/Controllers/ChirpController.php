@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Chirp;
 use App\Models\ChirpUser;
+use App\Models\Follow;
 use App\Models\Like;
 use App\Models\Rechirp;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ChirpController extends Controller
@@ -14,11 +16,32 @@ class ChirpController extends Controller
     public function index()
     {
 
-        return view('index', [
-            'chirps'    => Chirp::all(),
-            'likes'     => Like::all(),
-            'rechirps'  => Rechirp::all()
-        ]);
+        $follows     = Follow::where('user_id_1', auth()->user()->id)->get();
+
+        if (count($follows) > 0)
+        {
+
+            return view('index', [
+                'chirps'    => Chirp::all(),
+                'likes'     => Like::all(),
+                'rechirps'  => Rechirp::all(),
+                'follows'   => Follow::all(),
+                'users'     => User::all()
+            ]);
+
+        } else {
+
+            $user = User::find(auth()->user()->id);
+            
+            return view('index', [
+                'chirps'    => $user->chirps,
+                'likes'     => Like::all(),
+                'rechirps'  => Rechirp::all(),
+                'follows'   => Follow::all(),
+                'users'     => User::all()
+            ]);
+
+        }
         
     }
 

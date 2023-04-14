@@ -2,9 +2,11 @@
     <div class="py-4">
         <div class="px-4 pb-4 flex flex-row items-start justify-between">
             <div class="flex flex-col items-start space-y-2">
-                <img alt="{{ 'Picture of ' . $user->name }}"
-                    src="{{ asset('storage/'.$user->avatar) }}"
-                    class="w-36 h-36 rounded-lg object-cover" />
+                @unless (empty($user->avatar))
+                    <img alt="{{ 'Picture of ' . auth()->user()->name }}" src="{{ asset('storage/' . $user->avatar) }}" class="h-36 w-36 rounded-lg object-cover" />
+                @else
+                    <i class="fa-solid fa-user-circle text-9xl"></i>
+                @endunless
                 <div class="flex flex-col items-start space-y-4">
                     <div class="flex flex-col items-start">
                         <span class="font-semibold text-2xl">{{ $user->name }}</span>
@@ -44,12 +46,6 @@
                         data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
                         aria-selected="false">Chirps</button>
                 </li>
-                <li class="mr-2" role="presentation">
-                    <button
-                        class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                        id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
-                        aria-controls="dashboard" aria-selected="false">Chirps &amp; Replies</button>
-                </li>
                 <li role="presentation">
                     <button
                         class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
@@ -84,16 +80,27 @@
                                 </p>
                             </span>
                 
-                            <div class="mt-2 flex flex-row items-center space-x-6">
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-message"></i></a>
-                                    <span href="#" class="text-sm"></span>
-                                </div>
-                
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                                    <span class="text-sm"></span>
-                                </div>
+                            <div class="mt-2 flex flex-row items-center space-x-6">                
+                                @unless (count($rechirps) == 0)                            
+                                @foreach ($rechirps as $rechirp)
+                                    @if ($rechirp->chirp_id == $chirp->id && $rechirp->user_id == auth()->user()->id)
+                                        <div class="flex items-center space-x-2 text-green-600">
+                                            <a href="/chirps/unrechirp/{{ $chirp->id }}"><i class="fa-solid fa-retweet"></i></a>
+                                            <span href="#" class="text-sm">{{ count($rechirps) }}</span>
+                                        </div>
+                                    @else
+                                        <div class="flex items-center space-x-2 text-gray-500">
+                                            <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-regular fa-retweet"></i></a>
+                                            <span href="#" class="text-sm"></span>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @else
+                            <div class="flex items-center space-x-2 text-gray-500">
+                                <a href="/chirps/rechirp/{{ $chirp->id }}"><i class="fa-regular fa-retweet"></i></a>
+                                <span href="#" class="text-sm"></span>
+                            </div>
+                            @endunless
                 
                                 @unless (count($likes) == 0)                            
                                 @foreach ($likes as $like)
@@ -121,55 +128,6 @@
                 </div>
                 @endforeach
             </div>
-            <div class="hidden" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-                <div class="border-b">
-                    <div class="flex items-start gap-4 px-4 py-4 xl:pl-4 xl:pr-0">
-                        <a href="#" class="block shrink-0">
-                            <img alt="{{ 'Picture of ' . $user->name }}"
-                                src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
-                                class="h-14 w-14 rounded-lg object-cover" />
-                        </a>
-
-                        <div class="space-y-4">
-                            <span class="space-y-1">
-                                <div class="flex flex-wrap items-center lg:flex-row lg:justify-between">
-                                    <span class="font-medium space-x-1">
-                                        <a href="#" class="text-lg hover:underline">
-                                            Question about Livewire Rendering and Alpine JS
-                                        </a>
-                                        <span class="text-sm font-normal text-gray-500">by Austin Reaves</span>
-                                    </span>
-                                    <span class="text-sm text-gray-500">
-                                        1 days ago
-                                    </span>
-                                </div>
-                                <p class="text-gray-700">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-                                    accusantium temporibus iure delectus ut totam natus nesciunt ex?
-                                    Ducimus, enim.
-                                </p>
-                            </span>
-
-                            <div class="mt-2 flex flex-row items-center space-x-8">
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-message"></i></a>
-                                    <span href="#" class="text-sm">14</span>
-                                </div>
-
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-solid fa-retweet"></i></a>
-                                    <span class="text-sm">14</span>
-                                </div>
-
-                                <div class="flex items-center space-x-2 text-gray-500">
-                                    <a href="#"><i class="fa-regular fa-heart"></i></a>
-                                    <span class="text-sm">14</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="hidden" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
             @unless (count($likes) == 0)
                 @foreach ($likes as $like)
@@ -195,12 +153,7 @@
                                     </p>
                                 </span>
                     
-                                <div class="mt-2 flex flex-row items-center space-x-6">
-                                    <div class="flex items-center space-x-2 text-gray-500">
-                                        <a href="#"><i class="fa-regular fa-message"></i></a>
-                                        <span href="#" class="text-sm"></span>
-                                    </div>
-                    
+                                <div class="mt-2 flex flex-row items-center space-x-6">                    
                                     <div class="flex items-center space-x-2 text-gray-500">
                                         <a href="#"><i class="fa-solid fa-retweet"></i></a>
                                         <span class="text-sm"></span>

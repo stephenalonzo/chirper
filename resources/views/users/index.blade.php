@@ -40,6 +40,7 @@
                     <button type="submit" class="px-4 py-2 rounded-md bg-blue-600 text-white">Log in</button>
                 </span>
             </form>
+            <span class="text-start">Don't have an account yet? <a href="/register" class="font-semibold underline underline-offset-8">Register</a> now!</span>
         </div>
     </div>
 </body>

@@ -18,17 +18,16 @@
         </nav>
     </header>
     <div class="relative max-w-screen-xs mx-auto">
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/3 w-full flex flex-col items-center justify-center space-y-6">
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/4 w-full flex flex-col items-center justify-center space-y-6">
             <div class="flex flex-col items-center justify-center text-center space-y-1">
                 <h1 class="font-semibold text-2xl text-center">Welcome to Chirper!</h1>
                 <p class="text-gray-500">We're excited to have you join our community.</p>
             </div>
-            <form action="/users/register" method="POST" class="px-4 grid grid-flow-row gap-4 w-full">
+            <form action="/users/register" method="POST" enctype="multipart/form-data" class="px-4 grid grid-flow-row gap-4 w-full">
                 @csrf
                 <div class="flex flex-col items-start space-y-1">
                     <label for="">Full Name</label>
-                    <input type="text" name="name" class="p-2 rounded-md border w-full"
-                        placeholder="Enter your full name">
+                    <input type="text" name="name" class="p-2 rounded-md border w-full" placeholder="Enter your full name">
                 </div>
                 <div class="flex flex-col items-start space-y-1">
                     <label for="">Username</label>
@@ -53,9 +52,10 @@
                     <input type="password" name="password_confirmation" class="p-2 rounded-md border w-full" placeholder="Re-enter password">
                 </div>
                 <span>
-                    <button type="submit" class="px-4 py-2 rounded-md bg-blue-600 text-white">Register</button>
+                    <button type="submit" name="register" class="px-4 py-2 rounded-md bg-blue-600 text-white">Register</button>
                 </span>
             </form>
+            <span class="text-start">Already have an account? <a href="/" class="font-semibold underline underline-offset-8">Login</a> now!</span>
         </div>
     </div>
 </body>
