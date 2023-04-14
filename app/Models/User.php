@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Like;
 use App\Models\Chirp;
+use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -65,6 +66,26 @@ class User extends Authenticatable
     {
 
         return $this->hasMany(Rechirp::class);
+
+    }
+
+    public function follows()
+    {
+
+        return $this->hasMany(Follow::class);
+
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+
+        if ($filters['search'] ?? false)
+        {
+
+            return $query->where('username', 'like', '%' . request()->search . '%')
+                        ->orWhere('name', 'like', '%' . request()->search . '%');
+
+        }
 
     }
 

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Chirp;
-use App\Models\Follow;
-use App\Models\ChirpLike;
 use App\Models\Like;
+use App\Models\User;
+use App\Models\Follow;
+use App\Models\Rechirp;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -29,7 +28,8 @@ class UserController extends Controller
             'following' => Follow::where('user_id_1', $user->id)->get(),
             'followers' => Follow::where('user_id_2', $user->id)->get(),
             'follows'   => Follow::where('user_id_1', auth()->user()->id)->where('user_id_2', $user->id)->get(),
-            'likes'     => Like::where('user_id', $user->id)->get()
+            'likes'     => Like::where('user_id', $user->id)->get(),
+            'rechirps'  => Rechirp::where('user_id', $user->id)->get(),
         ]);
 
     }
@@ -69,11 +69,21 @@ class UserController extends Controller
             'name'      => 'required',
             'username'  => 'required',
             'email'     => ['required', 'email'],
-            'password'  => ['required', 'confirmed']
+            'password'  => ['required', 'confirmed'],
         ]);
         
         $inputFields['password'] = bcrypt($inputFields['password']);
 
+        
+        // Check if user uploaded attachment
+        // If this is true, store the uploaded attachment
+        if ($request->hasFile('avatar'))
+        {
+
+            $inputFields['avatar'] = $request->file('avatar')->store('avatars', 'public');
+
+        }
+        
         $user = User::create($inputFields);
 
         auth()->login($user);
