@@ -28,11 +28,6 @@
                         <span class="font-medium">Home</span>
                     </a>
 
-                    {{-- <a href="/users/{{ auth()->user()->id }}" class="flex items-center gap-2 text-gray-700">
-                        <i class="fa-regular fa-user text-lg"></i>
-
-                        <span class="font-medium">Profile</span>
-                    </a> --}}
                     <details class="group [&_summary::-webkit-details-marker]:hidden">
                         <summary
                             class="flex cursor-pointer items-center justify-between text-gray-700">
@@ -69,11 +64,9 @@
                         <button type="button" class="lg:hidden" id="bars"><i
                                 class="fa-solid fa-bars-sort text-3xl text-blue-600"></i></button>
                         <span class="font-semibold text-xl hidden lg:flex">{{ Str::ucfirst(Route::currentRouteName()) }}</span>
-                        <form class="mb-0">
+                        <form action="/discover" class="mb-0">
                             <div class="relative">
-                                <input
-                                    class="h-10 rounded-lg border border-gray-200 pl-3 pr-10 placeholder-gray-300 focus:z-10"
-                                    placeholder="Explore" type="text" />
+                                <input class="h-10 rounded-lg border border-gray-200 pl-3 pr-10 placeholder-gray-300 focus:z-10" placeholder="Discover users" type="text" name="search" />
                                 <button type="submit"
                                     class="absolute inset-y-0 right-0 rounded-r-lg p-2 text-gray-600">
                                     <i class="fa-solid fa-search text-sm"></i>
